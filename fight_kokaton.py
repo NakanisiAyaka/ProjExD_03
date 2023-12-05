@@ -12,7 +12,7 @@ MAIN_DIR = os.path.split(os.path.abspath(__file__))[0]
 NUM_OF_BOMBS = 5  # 爆弾の数
 
 
-def check_bound(obj_rct: pg.Rect) -> tuple[bool, bool]:
+def check_bound(obj_rct: pg.Rect)  ->  tuple[bool, bool]:
     """
     オブジェクトが画面内or画面外を判定し，真理値タプルを返す関数
     引数：こうかとん，または，爆弾SurfaceのRect
@@ -148,13 +148,15 @@ class Beam:
 
 class Explosion:
     def __init__(self, bomb: Bomb):
-       self.img = pg.transform.flip(pg.image.load(f"{MAIN_DIR}/fig/explosion.gif"), False, True)  # 演習１：画像読み込み
-       self.rct = self.img.get_rct()
-       self.rct.center = bomb.rct.center  # 爆弾の座標を取得
-       life = 1  # エフェクト表示時間設定
+        ex_img = pg.image.load(f"{MAIN_DIR}/fig/explosion.gif")
+        ex_imgs = [ex_img,pg.transform.flip(ex_img, False, True) ]  # 演習１：画像リスト
+        self.rct = self.img.get_rct()
+        self.rct.center = bomb.rct.center  # 爆弾の座標を取得
+        life = 4  # エフェクト表示時間設定
     
     def update(self,screen: pg.Surface):
         life -= 1
+
 
 
 def main():
@@ -164,7 +166,7 @@ def main():
     bird = Bird(3, (635, 340))
     bombs = [Bomb() for _ in range(NUM_OF_BOMBS)]  # BomnbインスタンスがNum個並んだリスト
     beam = None
-    explosion = ()
+    explosion = []
 
     clock = pg.time.Clock()
     tmr = 0
